@@ -1,13 +1,179 @@
 <!doctype html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite + TS</title>
-  </head>
-  <body>
-    <div id="app"></div>
+    <style>
+*{
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+}
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: #f4f4f4;
+        }
+
+        section {
+            min-height: 100vh;
+        }
+
+        header {
+            background: #000;
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-size: 0.5rem;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+
+        .hero-section {
+        }
+
+        .hero-section h2 {
+            font-size: 3em;
+            font-weight: bold;
+        }
+
+        .features,
+        .specs {
+            display: flex;
+            justify-content: space-around;
+            padding: 30px 20px;
+            background-color: #fff;
+            margin: 20px 0;
+        }
+
+        .feature-item,
+        .spec-item {
+            text-align: center;
+            flex: 1;
+            padding: 10px;
+        }
+
+        .feature-item h3,
+        .spec-item h3 {
+            font-size: 1.5em;
+            color: #000;
+        }
+
+        .call-to-action {
+            text-align: center;
+            background-color: #000;
+            color: white;
+            padding: 40px;
+        }
+
+        .call-to-action h2 {
+            font-size: 2.5em;
+            margin: 0;
+        }
+
+        .cta-button {
+            background-color: #d50032;
+            color: white;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .cta-button:hover {
+            background-color: #b20029;
+        }
+
+        footer {
+            background-color: #222;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .panel {
+            position: absolute;
+            width: 50vw;
+            margin: 1rem;
+            padding: 0.5rem;
+            text-align: center;
+
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>BMW</h1>
+    </header>
+
+    <section class="hero-section">
+        <!-- <div class="panel"> -->
+
+            <h2>Experience <br>
+                Innovation <br>
+                and Luxury</h2>
+        <!-- </div> -->
+    </section>
+
+    <section class="features">
+        <div class="feature-item">
+            <h3>Design</h3>
+            <p>Elegant and aerodynamic design for ultimate performance.</p>
+        </div>
+        <div class="feature-item">
+            <h3>Performance</h3>
+            <p>Unmatched driving experience with powerful engines and precision handling.</p>
+        </div>
+        <div class="feature-item">
+            <h3>Technology</h3>
+            <p>Cutting-edge technology, including AI-based driving assistance and entertainment systems.</p>
+        </div>
+    </section>
+
+    <section class="specs">
+        <div class="spec-item">
+            <h3>Top Speed</h3>
+            <p>250 km/h</p>
+        </div>
+        <div class="spec-item">
+            <h3>Horsepower</h3>
+            <p>450 HP</p>
+        </div>
+        <div class="spec-item">
+            <h3>Fuel Efficiency</h3>
+            <p>12 km/l</p>
+        </div>
+    </section>
+
+    <section class="call-to-action">
+        <h2>Ready to Experience BMW?</h2>
+        <a href="#cta" class="cta-button">Book a Test Drive</a>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 BMW. All Rights Reserved.</p>
+    </footer>
+</body>
+<!--  <body>
     <script type="module" src="/src/main.ts"></script>
   </body>
+  -->
+
 </html>
