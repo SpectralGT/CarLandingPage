@@ -17,8 +17,9 @@ loader.load('/model.glb',
   function (gltf) {
     car = gltf.scene;
     console.log(car)
+    car.position.set(-1,-1,0)
     scene.add(car)
-    camera.lookAt(car.position)
+
   },
   function (xhr) {},
   function (error) {}
@@ -33,4 +34,4 @@ const rerender3D = () =>{
   requestAnimationFrame(rerender3D);
   renderer.render(scene,camera)
 }
-rerender3D
+rerender3D()
