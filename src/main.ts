@@ -71,6 +71,7 @@ document.getElementById('container3D')?.append(renderer.domElement);
 
 const rerender3D = () => {
   requestAnimationFrame(rerender3D);
+
   renderer.render(scene, camera);
 }
 
@@ -79,13 +80,13 @@ rerender3D()
 let arrPositionModel = [
   {
     id: 'hero-section',
-    position: { x: 2, y: 1.5, z: 5 },
+    position: { x: 2, y: 1, z: 5 },
     rotation: { x: -0.1, y: 0.2, z: 0 }
 
   },
   {
     id: 'features',
-    position: { x: 12, y: 0, z:-10 },
+    position: { x: 12, y: 0, z:-8 },
     rotation: { x: 0, y: 1.5, z: 0 }
 
   }, {
@@ -95,7 +96,7 @@ let arrPositionModel = [
 
   }, {
     id: 'call-to-action',
-    position: { x: 0, y: 0, z: 7 },
+    position: { x: -2, y: 0, z: 10 },
     rotation: { x: 0, y: 0, z: 0 }
 
   },
@@ -121,14 +122,14 @@ const modelMove = () => {
       x: new_coordinates.rotation.x,
       y: new_coordinates.rotation.y,
       z: new_coordinates.rotation.z,
-      duration: 3,
+      duration: 1,
       ease: "power1.out"
     })
     gsap.to(camera.position, {
       x: new_coordinates.position.x,
       y: new_coordinates.position.y,
       z: new_coordinates.position.z,
-      duration: 3,
+      duration: 1,
       ease: "power1.out"
     })
 
@@ -151,7 +152,7 @@ window.addEventListener('resize', () => {
 window.addEventListener('mousemove', (event) => {
   let mouse_x = (event.clientX / window.innerWidth) * 2 - 1;
   let mouse_y = -(event.clientY / window.innerHeight) * 2 + 1;
-  pivot.rotation.x = -mouse_y * 0.01;
-  pivot.rotation.y = mouse_x * 0.01;
+  // pivot.rotation.x = -mouse_y * 0.1;
+  // pivot.rotation.y = mouse_x * 0.1;
 })
 
