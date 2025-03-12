@@ -1,6 +1,10 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/Addons.js';
 import { gsap } from 'gsap';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { BloomPass } from 'three/addons/postprocessing/BloomPass.js';
+import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 
 const camera = new THREE.PerspectiveCamera(
   10,
@@ -23,8 +27,10 @@ loader.load('/model.glb',
   function (gltf) {
     car = gltf.scene;
     console.log(car.animations);
-    car.position.set(-2, -1, -5);
-    car.rotation.set(0.1, -0.5, 0);
+
+    car.position.set(-2, -1, -7);
+    car.rotation.set(0, 0, 0);
+    modelMove();
     scene.add(car);
 
   },
@@ -32,17 +38,36 @@ loader.load('/model.glb',
   function (error) { }
 )
 
+const geometry = new THREE.PlaneGeometry( 1000, 1000 );
+const material = new THREE.MeshBasicMaterial( {color: 0xebebeb, side: THREE.DoubleSide} );
+const plane = new THREE.Mesh( geometry, material );
+// scene.add( plane );
+plane.position.set(-3,-2,0);
+plane.rotation.set(1.6,0,0)
 
-const ambientLight = new THREE.AmbientLight(0xffffff, 1.3);
+
+const ambientLight = new THREE.AmbientLight(0xffffff, 2);
 scene.add(ambientLight);
 
-const topLight = new THREE.DirectionalLight(0xffffff, 5);
+const topLight = new THREE.DirectionalLight(0xffffff, 10);
 topLight.position.set(500, 500, 500);
 scene.add(topLight);
 
 const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight)
 document.getElementById('container3D')?.append(renderer.domElement);
+// renderer.setClearColor(0x7CEEB, 1)
+//const composer = new EffectComposer(renderer);
+
+//const renderPass = new RenderPass(scene, camera);
+//composer.addPass(renderPass);
+
+//const bloomPass = new BloomPass(5, 0.1);
+
+//composer.addPass(bloomPass);
+
+//const outputPass = new OutputPass();
+//composer.addPass(outputPass);
 
 const rerender3D = () => {
   requestAnimationFrame(rerender3D);
@@ -53,11 +78,27 @@ rerender3D()
 
 let arrPositionModel = [
   {
+    id: 'hero-section',
+    position: { x: 2, y: 1.5, z: 5 },
+    rotation: { x: -0.1, y: 0.2, z: 0 }
+
+  },
+  {
     id: 'features',
-    position: { x: 0, y: 0, z: 0 },
+    position: { x: 12, y: 0, z:-10 },
+    rotation: { x: 0, y: 1.5, z: 0 }
+
+  }, {
+    id: 'specs',
+    position: { x: 2, y: 1, z: -20 },
+    rotation: { x: 0.1, y: 3, z: 0 }
+
+  }, {
+    id: 'call-to-action',
+    position: { x: 0, y: 0, z: 7 },
     rotation: { x: 0, y: 0, z: 0 }
 
-  }
+  },
 ]
 
 
@@ -76,7 +117,14 @@ const modelMove = () => {
   if (position_active >= 0) {
 
     let new_coordinates = arrPositionModel[position_active];
-    gsap.to(car.position, {
+    gsap.to(camera.rotation, {
+      x: new_coordinates.rotation.x,
+      y: new_coordinates.rotation.y,
+      z: new_coordinates.rotation.z,
+      duration: 3,
+      ease: "power1.out"
+    })
+    gsap.to(camera.position, {
       x: new_coordinates.position.x,
       y: new_coordinates.position.y,
       z: new_coordinates.position.z,
@@ -84,13 +132,6 @@ const modelMove = () => {
       ease: "power1.out"
     })
 
-    gsap.to(car.rotation, {
-      x: new_coordinates.rotation.x,
-      y: new_coordinates.rotation.y,
-      z: new_coordinates.rotation.z,
-      duration: 3,
-      ease: "power1.out"
-    })
   }
 }
 
@@ -110,7 +151,7 @@ window.addEventListener('resize', () => {
 window.addEventListener('mousemove', (event) => {
   let mouse_x = (event.clientX / window.innerWidth) * 2 - 1;
   let mouse_y = -(event.clientY / window.innerHeight) * 2 + 1;
-  pivot.rotation.x = -mouse_y * 0.1;
-  pivot.rotation.y = mouse_x * 0.1;
+  pivot.rotation.x = -mouse_y * 0.01;
+  pivot.rotation.y = mouse_x * 0.01;
 })
 
