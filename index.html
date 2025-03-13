@@ -24,11 +24,30 @@
             box-sizing: border-box;
             background: #f0f0f0;
             background: radial-gradient(circle, rgba(240, 240, 240, 1) 0%, rgba(180, 180, 180, 1) 100%);
+
+        }
+
+        html {
+            scroll-snap-type: y mandatory;
+
+        }
+
+        canvas {
+            overflow: hidden;
+            max-width: 100vw;
+        }
+
+        section,
+        header,
+        footer {
+            scroll-snap-align: end;
+
         }
 
         section {
             z-index: 3;
             min-height: 100vh;
+            height: 100vh;
         }
 
         header {
@@ -47,6 +66,9 @@
             font-size: 2.5em;
         }
 
+        .hero-section{
+            overflow: hidden;
+        }
 
         .call-to-action {
             text-align: center;
@@ -69,13 +91,13 @@
             cursor: pointer;
             text-decoration: none;
             z-index: 4;
-            position:relative;
+            position: relative;
         }
 
         .cta-button:hover {
             background-color: #b20029;
             z-index: 4;
-            position:relative;
+            position: relative;
         }
 
         footer {
@@ -84,7 +106,7 @@
             text-align: center;
             padding: 20px;
             z-index: 4;
-            position:relative;
+            position: relative;
         }
 
         .panel {
@@ -108,6 +130,8 @@
             inset: 0;
             z-index: 0;
             pointer-events: none;
+            max-width: 100vw;
+            overflow: hidden;
             /* background-color: red; */
         }
 
@@ -117,7 +141,7 @@
             margin: 2vh 5vh;
             font-family: "DM Serif Text", serif;
             font-weight: 900;
-            font-size: 7rem;
+            font-size:  clamp(10px,15vw,100px);
             font-style: normal;
             z-index: 4;
             position: relative;
@@ -139,7 +163,7 @@
             font-family: sans-serif;
             font-weight: 900;
             z-index: 4;
-            position:relative;
+            position: relative;
 
         }
     </style>

@@ -7,8 +7,10 @@ import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 import { ShaderPass } from 'three/examples/jsm/Addons.js';
 import { FXAAShader } from 'three/examples/jsm/Addons.js';
+import { VignetteShader } from 'three/examples/jsm/Addons.js';
 
 import { FlyControls } from 'three/addons/controls/FlyControls.js';
+
 
 const camera = new THREE.PerspectiveCamera(
   10,
@@ -164,6 +166,12 @@ composer.addPass(bloomPass);
 
 const fxaaPass = new ShaderPass( FXAAShader );
 // composer.addPass(fxaaPass);
+
+const vignettePass = new ShaderPass(VignetteShader);
+// console.log(vignettePass);
+// vignettePass.intesity = 1000;
+composer.addPass(vignettePass)
+
 const outputPass = new OutputPass();
 composer.addPass(outputPass);
 
@@ -213,7 +221,7 @@ let arrPositionModel = [
 
   }, {
     id: 'call-to-action',
-    position: { x: -2, y: 0, z: 10 },
+    position: { x: 0, y: 0, z: 10 },
     rotation: { x: 0, y: 0, z: 0 }
 
   },
