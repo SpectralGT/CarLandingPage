@@ -27,7 +27,7 @@
         }
 
         section {
-            z-index: 1;
+            z-index: 3;
             min-height: 100vh;
         }
 
@@ -37,9 +37,11 @@
             padding: 1rem;
             text-align: left;
             font-size: 0.5rem;
+            z-index: 4;
         }
 
         header h1 {
+            z-index: 3;
             margin: 0;
             font-size: 2.5em;
         }
@@ -93,7 +95,7 @@
             text-align: left;
         }
 
-        #container3D {
+        #container3D , #canvas3d{
             position: fixed;
             inset: 0;
             z-index: 2;
@@ -101,7 +103,10 @@
             /* background-color: red; */
         }
 
+
+
         h2 {
+        z-index: 4;
             margin: 2vh 5vh;
             font-family: "DM Serif Text", serif;
             font-weight: 900;
@@ -125,10 +130,13 @@
             font-weight: 900;
             
         }
+
     </style>
 </head>
 
 <body>
+
+    <div id="container3D"></div>
     <header>
         <h1>BMW</h1>
     </header>
@@ -184,7 +192,7 @@
     <footer>
         <p>&copy; 2025 BMW. All Rights Reserved.</p>
     </footer>
-    <div id="container3D"></div>
+    <!-- <canvas id="canvas3d"></canvas> -->
 </body>
 
 <script type="module" src="/src/main.ts"></script>

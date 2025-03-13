@@ -21,16 +21,29 @@ const pivot = new THREE.Group();
 scene.add(pivot)
 pivot.add(camera)
 pivot.position.set(0, 0, 0)
+
+
 let car;
 const loader = new GLTFLoader();
 loader.load('/model.glb',
   function (gltf) {
     car = gltf.scene;
     console.log(car.animations);
-
     car.position.set(-2, -1, -7);
     car.rotation.set(0, 0, 0);
     modelMove();
+
+    car.castShadow = true; //default is false
+    car.receiveShadow = true;
+
+
+    car.traverse(function (child) {
+      if (child.isMesh) {
+        child.castShadow = true;
+      }
+   });
+   
+
     scene.add(car);
 
   },
@@ -39,23 +52,41 @@ loader.load('/model.glb',
 )
 
 const geometry = new THREE.PlaneGeometry( 1000, 1000 );
-const material = new THREE.MeshBasicMaterial( {color: 0xebebeb, side: THREE.DoubleSide} );
+const material = new THREE.MeshPhongMaterial( {color: 0xebebeb,depthWrite: false} );
 const plane = new THREE.Mesh( geometry, material );
-// scene.add( plane );
-plane.position.set(-3,-2,0);
-plane.rotation.set(1.6,0,0)
+plane.receiveShadow = true;
+plane.position.set(-3,-10,0);
+plane.rotation.set(-Math.PI/2,0,0)
+scene.add( plane );
 
 
-const ambientLight = new THREE.AmbientLight(0xffffff, 2);
+const ambientLight = new THREE.AmbientLight(0xffffff, 0);
 scene.add(ambientLight);
 
 const topLight = new THREE.DirectionalLight(0xffffff, 10);
-topLight.position.set(500, 500, 500);
+topLight.position.set(5, 5, 5);
+topLight.castShadow = true;
 scene.add(topLight);
+
+
+topLight.shadow.mapSize.width = 5120; // default
+topLight.shadow.mapSize.height = 5120; // default
+topLight.shadow.camera.near = 0.5; // default
+topLight.shadow.camera.far = 500; // default
+
+
+//Create a helper for the shadow camera (optional)
+const helper = new THREE.CameraHelper( topLight.shadow.camera );
+scene.add( helper );
 
 const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight)
 document.getElementById('container3D')?.append(renderer.domElement);
+
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+
 // renderer.setClearColor(0x7CEEB, 1)
 //const composer = new EffectComposer(renderer);
 
