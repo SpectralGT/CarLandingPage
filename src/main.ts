@@ -57,7 +57,9 @@ loader.load('/model.glb',
 )
 
 const geometry = new THREE.PlaneGeometry(1000, 1000);
-const material = new THREE.MeshPhongMaterial({ color: 0xf0f0f0, depthWrite: false });
+// const material = new THREE.MeshPhongMaterial({ color: 0xf0f0f0, depthWrite: false });
+const material = new THREE.MeshPhongMaterial({ color: 0xff0000, depthWrite: false });
+
 const plane = new THREE.Mesh(geometry, material);
 plane.receiveShadow = true;
 plane.position.set(-3, -0.9, 0);
@@ -141,12 +143,16 @@ topLight4.shadow.camera.left = -100;
 const helper = new THREE.CameraHelper(topLight.shadow.camera);
 scene.add(helper);
 
+
+scene.fog = new THREE.Fog( 0xff3030, 10, 100 );
+
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight)
 document.getElementById('container3D')?.append(renderer.domElement);
 
 renderer.setClearColor(0x000000,0);
-scene.background = new THREE.Color(0xdadada);
+// scene.background = new THREE.Color(0xdadada);
+scene.background = new THREE.Color(0xff3030);
 
 renderer.shadowMap.enabled = true;
 
