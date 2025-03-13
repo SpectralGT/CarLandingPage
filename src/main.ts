@@ -3,8 +3,10 @@ import { GLTFLoader } from 'three/examples/jsm/Addons.js';
 import { gsap } from 'gsap';
 import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
-import { BloomPass } from 'three/addons/postprocessing/BloomPass.js';
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+
+import { FlyControls } from 'three/addons/controls/FlyControls.js';
 
 const camera = new THREE.PerspectiveCamera(
   10,
@@ -34,16 +36,15 @@ loader.load('/model.glb',
     modelMove();
 
     car.castShadow = true; //default is false
-    car.receiveShadow = true;
+    car.receiveShadow = false;
 
 
-    car.traverse(function (child) {
+    gltf.scene.traverse(function (child) {
       if (child.isMesh) {
         child.castShadow = true;
       }
-   });
-   
-
+    });
+    console.log(car.children[0].children[0].children[0]);
     scene.add(car);
 
   },
@@ -51,59 +52,136 @@ loader.load('/model.glb',
   function (error) { }
 )
 
-const geometry = new THREE.PlaneGeometry( 1000, 1000 );
-const material = new THREE.MeshPhongMaterial( {color: 0xebebeb,depthWrite: false} );
-const plane = new THREE.Mesh( geometry, material );
+const geometry = new THREE.PlaneGeometry(1000, 1000);
+const material = new THREE.MeshPhongMaterial({ color: 0xf0f0f0, depthWrite: false });
+const plane = new THREE.Mesh(geometry, material);
 plane.receiveShadow = true;
-plane.position.set(-3,-10,0);
-plane.rotation.set(-Math.PI/2,0,0)
-scene.add( plane );
+plane.position.set(-3, -0.9, 0);
+plane.rotation.set(-Math.PI / 2, 0, 0)
+scene.add(plane);
 
 
-const ambientLight = new THREE.AmbientLight(0xffffff, 0);
+const ambientLight = new THREE.AmbientLight(0xaaaaaa, 1);
+// ambientLight.castShadow = true;
 scene.add(ambientLight);
 
-const topLight = new THREE.DirectionalLight(0xffffff, 10);
-topLight.position.set(5, 5, 5);
+const topLight = new THREE.DirectionalLight(0xffffff, 1);
+topLight.position.set(5, 5, 7.5);
 topLight.castShadow = true;
+topLight.shadow.radius=10;
+topLight.shadow.intensity = 2;
 scene.add(topLight);
 
+const topLight2 = new THREE.DirectionalLight(0xffffff, 1);
+topLight2.position.set(-5, 5, 7.5);
+topLight2.castShadow = true;
+topLight2.shadow.radius=10;
+topLight2.shadow.intensity = 2;
+scene.add(topLight2);
 
-topLight.shadow.mapSize.width = 5120; // default
-topLight.shadow.mapSize.height = 5120; // default
+
+
+const topLight3 = new THREE.DirectionalLight(0xffffff, 1);
+topLight3.position.set(0, 5, -7.5);
+topLight3.castShadow = true;
+topLight3.shadow.radius=10;
+topLight3.shadow.intensity = 2;
+scene.add(topLight3);
+
+const topLight4 = new THREE.DirectionalLight(0xffffff, 1);
+topLight4.position.set(0, 5, 7.5);
+topLight4.castShadow = true;
+topLight4.shadow.radius=10;
+topLight4.shadow.intensity = 2;
+scene.add(topLight4);
+
+
+topLight.shadow.mapSize.width = 512*10; // default
+topLight.shadow.mapSize.height = 512*10; // default
 topLight.shadow.camera.near = 0.5; // default
 topLight.shadow.camera.far = 500; // default
+topLight.shadow.camera.top = 100;
+topLight.shadow.camera.right = 100;
+topLight.shadow.camera.bottom = -100;
+topLight.shadow.camera.left = -100;
+
+topLight2.shadow.mapSize.width = 512*10; // default
+topLight2.shadow.mapSize.height = 512*10; // default
+topLight2.shadow.camera.near = 0.5; // default
+topLight2.shadow.camera.far = 500; // default
+topLight2.shadow.camera.top = 100;
+topLight2.shadow.camera.right = 100;
+topLight2.shadow.camera.bottom = -100;
+topLight2.shadow.camera.left = -100;
+
+topLight3.shadow.mapSize.width = 512*10; // default
+topLight3.shadow.mapSize.height = 512*10; // default
+topLight3.shadow.camera.near = 0.5; // default
+topLight3.shadow.camera.far = 500; // default
+topLight3.shadow.camera.top = 100;
+topLight3.shadow.camera.right = 100;
+topLight3.shadow.camera.bottom = -100;
+topLight3.shadow.camera.left = -100;
+
+topLight4.shadow.mapSize.width = 512*10; // default
+topLight4.shadow.mapSize.height = 512*10; // default
+topLight4.shadow.camera.near = 0.5; // default
+topLight4.shadow.camera.far = 500; // default
+topLight4.shadow.camera.top = 100;
+topLight4.shadow.camera.right = 100;
+topLight4.shadow.camera.bottom = -100;
+topLight4.shadow.camera.left = -100;
 
 
 //Create a helper for the shadow camera (optional)
-const helper = new THREE.CameraHelper( topLight.shadow.camera );
-scene.add( helper );
+const helper = new THREE.CameraHelper(topLight.shadow.camera);
+scene.add(helper);
 
-const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight)
 document.getElementById('container3D')?.append(renderer.domElement);
 
+renderer.setClearColor(0x000000,0);
+scene.background = new THREE.Color(0xdadada);
+
 renderer.shadowMap.enabled = true;
-renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+renderer.shadowMap.type = THREE.PCFShadowMap;
 
 
-// renderer.setClearColor(0x7CEEB, 1)
-//const composer = new EffectComposer(renderer);
+renderer.setClearColor(0x7CEEB, 1)
+const composer = new EffectComposer(renderer);
 
-//const renderPass = new RenderPass(scene, camera);
-//composer.addPass(renderPass);
+const renderPass = new RenderPass(scene, camera);
+composer.addPass(renderPass);
 
-//const bloomPass = new BloomPass(5, 0.1);
+const bloomPass = new UnrealBloomPass(new THREE.Vector2(1024,1024),0.1,0,0.8);
 
-//composer.addPass(bloomPass);
+composer.addPass(bloomPass);
 
-//const outputPass = new OutputPass();
-//composer.addPass(outputPass);
+const outputPass = new OutputPass();
+composer.addPass(outputPass);
+
+
+let controls
+controls = new FlyControls(camera, renderer.domElement);
+
+controls.movementSpeed = 1000;
+controls.domElement = renderer.domElement;
+controls.rollSpeed = Math.PI / 24;
+controls.autoForward = false;
+controls.dragToLook = false;
+
+let clock = new THREE.Clock;
 
 const rerender3D = () => {
   requestAnimationFrame(rerender3D);
 
-  renderer.render(scene, camera);
+  const delta = clock.getDelta();
+
+  controls.update(delta);
+  // renderer.render(scene, camera);
+  composer.render();
 }
 
 rerender3D()
@@ -117,7 +195,7 @@ let arrPositionModel = [
   },
   {
     id: 'features',
-    position: { x: 12, y: 0, z:-8 },
+    position: { x: 12, y: 0, z: -8 },
     rotation: { x: 0, y: 1.5, z: 0 }
 
   }, {

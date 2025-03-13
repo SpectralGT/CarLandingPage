@@ -22,7 +22,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            background: rgb(240, 240, 240);
+            background: #f0f0f0;
             background: radial-gradient(circle, rgba(240, 240, 240, 1) 0%, rgba(180, 180, 180, 1) 100%);
         }
 
@@ -38,6 +38,7 @@
             text-align: left;
             font-size: 0.5rem;
             z-index: 4;
+            position: relative;
         }
 
         header h1 {
@@ -67,17 +68,23 @@
             border: none;
             cursor: pointer;
             text-decoration: none;
+            z-index: 4;
+            position:relative;
         }
 
         .cta-button:hover {
             background-color: #b20029;
+            z-index: 4;
+            position:relative;
         }
 
         footer {
-            background-color: #222;
-            color: white;
+            background-color: transparent;
+            color: black;
             text-align: center;
             padding: 20px;
+            z-index: 4;
+            position:relative;
         }
 
         .panel {
@@ -95,10 +102,11 @@
             text-align: left;
         }
 
-        #container3D , #canvas3d{
+        #container3D,
+        #canvas3d {
             position: fixed;
             inset: 0;
-            z-index: 2;
+            z-index: 0;
             pointer-events: none;
             /* background-color: red; */
         }
@@ -106,12 +114,13 @@
 
 
         h2 {
-        z-index: 4;
             margin: 2vh 5vh;
             font-family: "DM Serif Text", serif;
             font-weight: 900;
             font-size: 7rem;
             font-style: normal;
+            z-index: 4;
+            position: relative;
         }
 
         h3 {
@@ -123,14 +132,16 @@
             line-height: 2rem;
         }
 
-        p {margin-top: 0px;
+        p {
+            margin-top: 0px;
             font-size: 1rem;
             line-height: 1rem;
             font-family: sans-serif;
             font-weight: 900;
-            
-        }
+            z-index: 4;
+            position:relative;
 
+        }
     </style>
 </head>
 
