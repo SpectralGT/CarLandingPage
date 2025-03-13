@@ -12,6 +12,10 @@ import { VignetteShader } from 'three/examples/jsm/Addons.js';
 import { FlyControls } from 'three/addons/controls/FlyControls.js';
 
 
+
+let mouse_x = 0;
+let mouse_y = 0;
+
 const camera = new THREE.PerspectiveCamera(
   10,
   window.innerWidth / window.innerHeight,
@@ -74,14 +78,14 @@ scene.add(ambientLight);
 const topLight = new THREE.DirectionalLight(0xffffff, 1);
 topLight.position.set(5, 5, 7.5);
 topLight.castShadow = true;
-topLight.shadow.radius=10;
+topLight.shadow.radius = 10;
 topLight.shadow.intensity = 2;
 scene.add(topLight);
 
 const topLight2 = new THREE.DirectionalLight(0xffffff, 1);
 topLight2.position.set(-5, 5, 7.5);
 topLight2.castShadow = true;
-topLight2.shadow.radius=10;
+topLight2.shadow.radius = 10;
 topLight2.shadow.intensity = 2;
 scene.add(topLight2);
 
@@ -90,20 +94,20 @@ scene.add(topLight2);
 const topLight3 = new THREE.DirectionalLight(0xffffff, 1);
 topLight3.position.set(0, 5, -7.5);
 topLight3.castShadow = true;
-topLight3.shadow.radius=10;
+topLight3.shadow.radius = 10;
 topLight3.shadow.intensity = 2;
 scene.add(topLight3);
 
 const topLight4 = new THREE.DirectionalLight(0xffffff, 1);
 topLight4.position.set(0, 5, 7.5);
 topLight4.castShadow = true;
-topLight4.shadow.radius=10;
+topLight4.shadow.radius = 10;
 topLight4.shadow.intensity = 2;
 scene.add(topLight4);
 
 
-topLight.shadow.mapSize.width = 512*10; // default
-topLight.shadow.mapSize.height = 512*10; // default
+topLight.shadow.mapSize.width = 512 * 10; // default
+topLight.shadow.mapSize.height = 512 * 10; // default
 topLight.shadow.camera.near = 0.5; // default
 topLight.shadow.camera.far = 500; // default
 topLight.shadow.camera.top = 100;
@@ -111,8 +115,8 @@ topLight.shadow.camera.right = 100;
 topLight.shadow.camera.bottom = -100;
 topLight.shadow.camera.left = -100;
 
-topLight2.shadow.mapSize.width = 512*10; // default
-topLight2.shadow.mapSize.height = 512*10; // default
+topLight2.shadow.mapSize.width = 512 * 10; // default
+topLight2.shadow.mapSize.height = 512 * 10; // default
 topLight2.shadow.camera.near = 0.5; // default
 topLight2.shadow.camera.far = 500; // default
 topLight2.shadow.camera.top = 100;
@@ -120,8 +124,8 @@ topLight2.shadow.camera.right = 100;
 topLight2.shadow.camera.bottom = -100;
 topLight2.shadow.camera.left = -100;
 
-topLight3.shadow.mapSize.width = 512*10; // default
-topLight3.shadow.mapSize.height = 512*10; // default
+topLight3.shadow.mapSize.width = 512 * 10; // default
+topLight3.shadow.mapSize.height = 512 * 10; // default
 topLight3.shadow.camera.near = 0.5; // default
 topLight3.shadow.camera.far = 500; // default
 topLight3.shadow.camera.top = 100;
@@ -129,8 +133,8 @@ topLight3.shadow.camera.right = 100;
 topLight3.shadow.camera.bottom = -100;
 topLight3.shadow.camera.left = -100;
 
-topLight4.shadow.mapSize.width = 512*10; // default
-topLight4.shadow.mapSize.height = 512*10; // default
+topLight4.shadow.mapSize.width = 512 * 10; // default
+topLight4.shadow.mapSize.height = 512 * 10; // default
 topLight4.shadow.camera.near = 0.5; // default
 topLight4.shadow.camera.far = 500; // default
 topLight4.shadow.camera.top = 100;
@@ -144,13 +148,13 @@ const helper = new THREE.CameraHelper(topLight.shadow.camera);
 scene.add(helper);
 
 
-scene.fog = new THREE.Fog( 0xff3030, 10, 100 );
+scene.fog = new THREE.Fog(0xff3030, 10, 100);
 
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight)
 document.getElementById('container3D')?.append(renderer.domElement);
 
-renderer.setClearColor(0x000000,0);
+renderer.setClearColor(0x000000, 0);
 // scene.background = new THREE.Color(0xdadada);
 scene.background = new THREE.Color(0xff3030);
 
@@ -165,12 +169,12 @@ const composer = new EffectComposer(renderer);
 const renderPass = new RenderPass(scene, camera);
 composer.addPass(renderPass);
 
-const bloomPass = new UnrealBloomPass(new THREE.Vector2(1024,1024),0.1,0,0.8);
+const bloomPass = new UnrealBloomPass(new THREE.Vector2(1024, 1024), 0.1, 0, 0.8);
 
 composer.addPass(bloomPass);
 
 
-const fxaaPass = new ShaderPass( FXAAShader );
+const fxaaPass = new ShaderPass(FXAAShader);
 // composer.addPass(fxaaPass);
 
 const vignettePass = new ShaderPass(VignetteShader);
@@ -196,17 +200,6 @@ controls.dragToLook = false;
 
 let clock = new THREE.Clock;
 
-const rerender3D = () => {
-  requestAnimationFrame(rerender3D);
-
-  const delta = clock.getDelta();
-
-  controls.update(delta);
-  // renderer.render(scene, camera);
-  composer.render();
-}
-
-rerender3D()
 
 let arrPositionModel = [
   {
@@ -250,7 +243,7 @@ const modelMove = () => {
 
     let new_coordinates = arrPositionModel[position_active];
     gsap.to(camera.rotation, {
-      x: new_coordinates.rotation.x,
+      x: new_coordinates.rotation.x + (mouse_y*0.01),
       y: new_coordinates.rotation.y,
       z: new_coordinates.rotation.z,
       duration: 1,
@@ -281,9 +274,22 @@ window.addEventListener('resize', () => {
 })
 
 window.addEventListener('mousemove', (event) => {
-  let mouse_x = (event.clientX / window.innerWidth) * 2 - 1;
-  let mouse_y = -(event.clientY / window.innerHeight) * 2 + 1;
+  mouse_x = (event.clientX / window.innerWidth) * 2 - 1;
+  mouse_y = -(event.clientY / window.innerHeight) * 2 + 1;
   // pivot.rotation.x = -mouse_y * 0.1;
-  // pivot.rotation.y = mouse_x * 0.1;
+  pivot.rotation.y = mouse_x * 0.05;
+  modelMove();
 })
 
+
+const rerender3D = () => {
+  requestAnimationFrame(rerender3D);
+
+  const delta = clock.getDelta();
+
+  controls.update(delta);
+  // renderer.render(scene, camera);
+  composer.render();
+}
+
+rerender3D()
