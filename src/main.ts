@@ -5,6 +5,8 @@ import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+import { ShaderPass } from 'three/examples/jsm/Addons.js';
+import { FXAAShader } from 'three/examples/jsm/Addons.js';
 
 import { FlyControls } from 'three/addons/controls/FlyControls.js';
 
@@ -159,8 +161,14 @@ const bloomPass = new UnrealBloomPass(new THREE.Vector2(1024,1024),0.1,0,0.8);
 
 composer.addPass(bloomPass);
 
+
+const fxaaPass = new ShaderPass( FXAAShader );
+// composer.addPass(fxaaPass);
 const outputPass = new OutputPass();
 composer.addPass(outputPass);
+
+composer.renderTarget1.samples = 8;
+composer.renderTarget2.samples = 8;
 
 
 let controls
