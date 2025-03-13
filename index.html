@@ -2,190 +2,29 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + TS</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMW | Atharv Singh</title>
+    <link rel="icon" type="image/svg+xml" href="/vite.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=DM+Serif+Text:ital@0;1&display=swap"
-        rel="stylesheet">
-    <style>
-        * {
-            padding: 0px;
-            margin: 0px;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            background: #f0f0f0;
-            background: radial-gradient(circle, rgba(240, 240, 240, 1) 0%, rgba(180, 180, 180, 1) 100%);
-
-        }
-
-        html {
-            scroll-snap-type: y mandatory;
-
-        }
-
-        canvas {
-            overflow: hidden;
-            max-width: 100vw;
-        }
-
-        section,
-        header,
-        footer {
-            scroll-snap-align: end;
-
-        }
-
-        section {
-            z-index: 3;
-            min-height: 100vh;
-            height: 100vh;
-        }
-
-        header {
-            background: #000;
-            color: white;
-            padding: 1rem;
-            text-align: left;
-            font-size: 0.5rem;
-            z-index: 4;
-            position: relative;
-        }
-
-        header h1 {
-            z-index: 3;
-            margin: 0;
-            font-size: 2.5em;
-        }
-
-        .hero-section{
-            overflow: hidden;
-        }
-
-        .call-to-action {
-            text-align: center;
-            background-color: #000;
-            color: transparent;
-            padding: 40px;
-        }
-
-        .call-to-action h2 {
-            font-size: 2.5em;
-            margin: 0;
-        }
-
-        .cta-button {
-            background-color: #d50032;
-            color: white;
-            padding: 15px 30px;
-            font-size: 1.2em;
-            border: none;
-            cursor: pointer;
-            text-decoration: none;
-            z-index: 4;
-            position: relative;
-        }
-
-        .cta-button:hover {
-            background-color: #b20029;
-            z-index: 4;
-            position: relative;
-        }
-
-        footer {
-            background-color: transparent;
-            color: black;
-            text-align: center;
-            padding: 20px;
-            z-index: 4;
-            position: relative;
-        }
-
-        .panel {
-            z-index: 3;
-            position: absolute;
-            width: 40vw;
-            margin: 15vh 2rem;
-            padding: 0.5rem;
-            text-align: center;
-            aspect-ratio: 4/3;
-        }
-
-        .panel>* {
-            margin: auto;
-            text-align: left;
-        }
-
-        #container3D,
-        #canvas3d {
-            position: fixed;
-            inset: 0;
-            z-index: 0;
-            pointer-events: none;
-            max-width: 100vw;
-            overflow: hidden;
-            /* background-color: red; */
-        }
-
-
-
-        h2 {
-            margin: 2vh 5vh;
-            font-family: "DM Serif Text", serif;
-            font-weight: 900;
-            font-size:  clamp(10px,15vw,100px);
-            font-style: normal;
-            z-index: 4;
-            position: relative;
-        }
-
-        h3 {
-            font-size: 2rem;
-            font-family: "Bowlby One SC", sans-serif;
-            font-weight: 400;
-            font-style: normal;
-            margin-top: 2rem;
-            line-height: 2rem;
-        }
-
-        p {
-            margin-top: 0px;
-            font-size: 1rem;
-            line-height: 1rem;
-            font-family: sans-serif;
-            font-weight: 900;
-            z-index: 4;
-            position: relative;
-
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=DM+Serif+Text:ital@0;1&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/src/style.css">
 </head>
 
 <body>
-
     <div id="container3D"></div>
+    
     <header>
         <h1>BMW</h1>
     </header>
-
+    
     <section class="hero-section">
-
-        <h2>Experience <br>
-            Innovation <br>
-            Luxury</h2>
+        <h2>Experience <br> Innovation <br> Luxury</h2>
     </section>
-
+    
     <section class="features">
         <div class="panel">
-
             <div class="feature-item">
                 <h3>Design</h3>
                 <p>Elegant and aerodynamic design for ultimate performance.</p>
@@ -200,10 +39,9 @@
             </div>
         </div>
     </section>
-
+    
     <section class="specs">
         <div class="panel">
-
             <div class="spec-item">
                 <h3>Top Speed</h3>
                 <p>250 km/h</p>
@@ -218,18 +56,17 @@
             </div>
         </div>
     </section>
-
+    
     <section class="call-to-action">
         <h2>Ready to Experience BMW?</h2>
         <a href="#cta" class="cta-button">Book a Test Drive</a>
     </section>
-
+    
     <footer>
         <p>&copy; 2025 BMW. All Rights Reserved.</p>
     </footer>
-    <!-- <canvas id="canvas3d"></canvas> -->
+    
+    <script type="module" src="/src/main.ts"></script>
 </body>
-
-<script type="module" src="/src/main.ts"></script>
 
 </html>
